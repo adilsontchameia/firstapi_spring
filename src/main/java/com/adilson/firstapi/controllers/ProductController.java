@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.adilson.firstapi.dtos.ProductRecordDto;
 import com.adilson.firstapi.model.ProductsModel;
 import com.adilson.firstapi.repositories.ProductRepository;
@@ -47,7 +48,14 @@ public class ProductController {
     // GetAll Products
     @GetMapping("/products")
     public ResponseEntity<List<ProductsModel>> getAllProducts() {
-        return ResponseEntity.status(HttpStatus.OK).body(productRepository.findAll());
+        List<ProductsModel> productsList = productRepository.findAll();
+        if (!productsList.isEmpty()) {
+            for (ProductsModel product : productsList) {
+                UUID id = product.getIdProduct();
+                product.add(linkTo(methodOn(ProductController.class).getOneProduct(id)).withSelfRel());
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(productsList);
     }
 
     // GetProducts by Id
