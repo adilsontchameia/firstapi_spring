@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TB_PRODUCTS")
-public class ProductsMode implements Serializable {
+public class ProductsModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
