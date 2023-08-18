@@ -24,8 +24,15 @@ public class ProductController {
     // Mapeamento dos métodos
     @PostMapping("/products")
     public ResponseEntity<ProductsModel> saveProduct(@RequestBody @Valid ProductRecordDto productsRecordDto) {
+        // Vai se salvar na db o model
+        // Vai se converter o dto => model
         var productModel = new ProductsModel();
+        // Recebe o que vai ser convertido e o tipo que será convertido
+        // DTO => Model
         BeanUtils.copyProperties(productsRecordDto, productModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
+        // Construção do retorno
+        // Se codigo 201 (OK) => Salva na BD
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(productRepository.save(productRepository.save(productModel)));
     }
 }
