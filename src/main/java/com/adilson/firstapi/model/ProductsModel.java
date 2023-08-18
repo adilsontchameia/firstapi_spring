@@ -3,11 +3,14 @@ package com.adilson.firstapi.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TB_PRODUCTS")
-public class ProductsModel implements Serializable {
+public class ProductsModel extends RepresentationModel<ProductsModel> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
